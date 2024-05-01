@@ -1,0 +1,21 @@
+# Virtual environments
+venv/
+__pycache__/
+
+# Compiled files
+*.pyc
+*.pyo
+
+# Environment files
+.env
+
+# Database files
+*.db
+
+# Other potentially sensitive files
+secrets/
+
+# Logs and caches
+logs/
+*.log
+*.cache
