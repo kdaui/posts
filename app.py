@@ -6,7 +6,7 @@ import psycopg2
 app = Flask(__name__)
 
 # Retrieve database credentials from environment variables
-database_url = os.getenv('DATABASE_URL')
+database_url = os.getenv('postgresql://postgres:PFoxfDmJapWUQybiBFkHadkANFqZLMGM@monorail.proxy.rlwy.net:15894/railway')
 
 # Establish a connection to the PostgreSQL database
 connection = psycopg2.connect(database_url)
