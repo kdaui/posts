@@ -27,7 +27,7 @@ def home():
     conn.close()
     
     # Render the home page with the posts
-    return render_template('home.html', posts=posts)
+    return render_template('index.html', posts=posts)
 
 # Route for handling form submissions
 @app.route('/post', methods=['POST'])
