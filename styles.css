@@ -1,0 +1,58 @@
+body {
+  background-color: #141414;
+  color: #ffffff;
+  font-family: 'Impact', fantasy;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #ffffff;
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 2px solid #ffffff;
+}
+
+form {
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #2d2d2d;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+}
+
+form input, form textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+form input[type="text"] {
+  background-color: #3d3d3d;
+  color: #ffffff;
+}
+
+form textarea {
+  background-color: #3d3d3d;
+  color: #ffffff;
+  height: 80px;
+}
+
+form button {
+  background-color: #ffffff;
+  color: #141414;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #3d3d3d;
+  color: #ffffff;
+}
