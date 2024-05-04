@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Terminal Simulator</title>
+    <style>
+        /* CSS styling for terminal-like appearance */
+        body {
+            background-color: black;
+            color: green;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 10px;
+        }
+
+        #terminal {
+            height: 80vh;
+            width: 100%;
+            overflow-y: auto;
+            padding-bottom: 10px;
+        }
+
+        #input-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #input-line {
+            flex: 1;
+            border: none;
+            background-color: black;
+            color: green;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+        }
+
+        /* Blinking cursor */
+        #input-line::after {
+            content: '_';
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: green;
+            animation: blink 0.7s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="terminal">
+        <!-- Terminal output will be displayed here -->
+        <div id="output">
+            Welcome to the terminal simulator. Type commands to visit websites.
+        </div>
+    </div>
+
+    <div id="input-container">
+        <span>user@terminal:~$ </span>
+        <input type="text" id="input-line" autofocus autocomplete="off" />
+    </div>
+
+    <script>
+        const inputLine = document.getElementById('input-line');
+        const output = document.getElementById('output');
+
+        // Define commands and their associated URLs
+        const commands = {
+            'home': 'index.html',
+            'google': 'https://www.google.com',
+            'github': 'https://github.com',
+            'youtube': 'https://www.youtube.com',
+            'twitter': 'https://twitter.com',
+            'spotify': 'https://open.spotify.com',
+            'index.html': 'index.html',
+            'ascii.html': 'ascii.html',
+            'sbw.html': 'sbw.html',
+            // Add more commands and URLs as needed
+        };
+
+        // Function to handle input and execute commands
+        function handleInput(event) {
+            if (event.key === 'Enter') {
+                const command = inputLine.value.trim().toLowerCase();
+                inputLine.value = '';
+
+                if (commands.hasOwnProperty(command)) {
+                    // Command found, open the URL in a new tab
+                    window.open(commands[command], '_blank');
+                    output.innerHTML += `<div>user@terminal:~$ ${command}</div>`;
+                    output.innerHTML += `<div>Opening ${command}...</div>`;
+                } else {
+                    // Command not found, display an error message
+                    output.innerHTML += `<div>user@terminal:~$ ${command}</div>`;
+                    output.innerHTML += `<div>Command not found: ${command}</div>`;
+                }
+
+                // Scroll to the bottom of the terminal
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+        }
+
+        // Attach the handleInput function to the keyup event on the input line
+        inputLine.addEventListener('keyup', handleInput);
+    </script>
+</body>
+</html>
