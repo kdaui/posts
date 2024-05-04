@@ -9,7 +9,7 @@ Youtube
 
 Twitter
 
-index.html - The website you are on
+index.html - The main website of this pages
 
 ascii.html - Ascii generator
 
