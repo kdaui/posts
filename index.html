@@ -47,44 +47,80 @@
     <div id="terminal">
         <!-- Terminal output will be displayed here -->
         <div id="output">
-            Welcome to Posts. Type commands to visit websites. I'm losing my fucking mind typing this.
+            Welcome to Posts. Type commands to do things.
         </div>
     </div>
-
     <div id="input-container">
         <span>user@terminal:~$ </span>
         <input type="text" id="input-line" autofocus autocomplete="off" />
     </div>
-    <script>
-        const inputLine = document.getElementById('input-line');
-        const output = document.getElementById('output');
-        const commands = {
-            'home': 'index.html',
-            'google': 'https://www.google.com',
-            'github': 'https://github.com',
-            'youtube': 'https://www.youtube.com',
-            'twitter': 'https://twitter.com',
-            'spotify': 'https://open.spotify.com',
-            'index.html': 'index.html',
-            'ascii.html': 'ascii.html',
-            'sbw.html': 'sbw.html',
-        };
-        function handleInput(event) {
-            if (event.key === 'Enter') {
-                const command = inputLine.value.trim().toLowerCase();
-                inputLine.value = '';
-                if (commands.hasOwnProperty(command)) {
-                    window.open(commands[command], '_blank');
-                    output.innerHTML += `<div>user@terminal:~$ ${command}</div>`;
-                    output.innerHTML += `<div>Opening ${command}...</div>`;
-                } else {
-                    output.innerHTML += `<div>user@terminal:~$ ${command}</div>`;
-                    output.innerHTML += `<div>Command not found: ${command}</div>`;
-                }
-                terminal.scrollTop = terminal.scrollHeight;
+  <script>
+    const inputLine = document.getElementById('input-line');
+    const output = document.getElementById('output');
+    const commands = {
+        'home': 'index.html',
+        'sbw.html': 'sbw.html',
+        'ascii.html': 'ascii.html',
+        'google': 'https://www.google.com',
+        'github': 'https://github.com',
+        'youtube': 'https://www.youtube.com',
+        'twitter': 'https://twitter.com',
+        'spotify': 'https://open.spotify.com',
+        'reddit': 'https://www.reddit.com',
+        'wikipedia': 'https://en.wikipedia.org',
+        'stackoverflow': 'https://stackoverflow.com',
+        'linkedin': 'https://www.linkedin.com',
+        'facebook': 'https://www.facebook.com',
+        'instagram': 'https://www.instagram.com',
+        'amazon': 'https://www.amazon.com',
+        'netflix': 'https://www.netflix.com',
+        'apple': 'https://www.apple.com',
+        'duckduckgo': 'https://www.duckduckgo.com',
+        'quora': 'https://www.quora.com',
+        'discord': 'https://discord.com/channels/@me',
+        'zoom': 'https://zoom.us',
+        'classcharts': 'https://classcharts.com',
+    };
+    function getCurrentTime() {
+        const now = new Date();
+        return now.toLocaleTimeString();
+    }
+    function getCurrentTemperature() {
+        // Replace this with an actual API call to get the real temperature
+        return "22°C";
+    }
+    function displayHelp() {
+        output.innerHTML += `
+            <div>Help:</div>
+            <div>- Type a command to visit a website (e.g., 'google' for Google).</div>
+            <div>- Type 'time' to get the current time.</div>
+            <div>- Type 'temp' to get the current temperature.</div>
+            <div>- Type 'help' to see this message.</div>
+        `;
+    }
+    function handleInput(event) {
+        if (event.key === 'Enter') {
+            const command = inputLine.value.trim().toLowerCase();
+            inputLine.value = '';
+            output.innerHTML += `<div>user@terminal:~$ ${command}</div>`;
+            if (command === 'time') {
+                const time = getCurrentTime();
+                output.innerHTML += `<div>Current time: ${time}</div>`;
+            } else if (command === 'temp') {
+                const temperature = getCurrentTemperature();
+                output.innerHTML += `<div>Current temperature: ${temperature}</div>`;
+            } else if (command === 'help') {
+                displayHelp();
+            } else if (commands.hasOwnProperty(command)) {
+                window.open(commands[command], '_blank');
+                output.innerHTML += `<div>Opening ${command}...</div>`;
+            } else {
+                output.innerHTML += `<div>Command not found: ${command}</div>`;
             }
+            terminal.scrollTop = terminal.scrollHeight;
         }
-        inputLine.addEventListener('keyup', handleInput);
-    </script>
+    }
+    inputLine.addEventListener('keyup', handleInput);
+   </script>
 </body>
 </html>
