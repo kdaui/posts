@@ -1,6 +1,7 @@
 <h1>Terminal-like interface to go to other websites</h1>
 
 Websites implemented are:
+
 Google
 
 Github
