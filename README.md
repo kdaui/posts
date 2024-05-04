@@ -13,6 +13,6 @@ index.html - The main website of this pages
 
 ascii.html - Ascii generator
 
-SBW - Builds the main (kdaui.github.io/index.html) website in front of your eyes
+sbw.html - Builds the main (kdaui.github.io/index.html) website in front of your eyes
 
 Spotify
