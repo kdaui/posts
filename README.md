@@ -16,4 +16,34 @@ ascii.html - Ascii generator
 
 sbw.html - Builds the main (kdaui.github.io/index.html) website in front of your eyes
 
+Help - Shows the "help" command
+
 Spotify
+
+Reddit
+
+Wikipedia
+
+Stack Overflow (1 word)
+
+LinkedIn
+
+Facebook
+
+Instagram
+
+Amazon
+
+Netflix
+
+Apple
+
+DuckDuckGo
+
+Quora
+
+Discord
+
+Zoom
+
+ClassCharts
