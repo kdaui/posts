@@ -18,6 +18,8 @@ sbw.html - Builds the main (kdaui.github.io/index.html) website in front of your
 
 Help - Shows the "help" command
 
+wot - Goes to my "yourworldoftext" website
+
 Spotify
 
 Reddit
