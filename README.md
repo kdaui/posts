@@ -28,7 +28,7 @@ Reddit
 
 Wikipedia
 
-Stack Overflow (1 word)
+Stack Overflow (in 1 word)
 
 LinkedIn
 
@@ -51,3 +51,9 @@ Discord
 Zoom
 
 ClassCharts
+
+Gemini
+
+Steam
+
+Wotaku.moe - A Piracy Megathread dedicated to anime
