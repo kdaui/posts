@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUNG FU 2139</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #desktop {
+            background-color: #808085;
+            width: 80vw;
+            height: 80vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .window {
+            background-color: #808080;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            overflow: auto;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .title-bar {
+            background-color: #000;
+            padding: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .title-bar .title {
+            color: #fff;
+            font-weight: bold;
+            margin: 0;
+        }
+        .close-button {
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        .content {
+            text-align: center;
+            width: 100%;
+        }
+        .hidden {
+            display: none;
+        }
+        .folder-icon {
+            width: 50px;
+            height: 50px;
+            background-image: url('folder.png');
+            background-size: cover;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .notepad-window {
+            background-color: #fff;
+            border: 2px solid #000;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+            padding: 20px;
+            position: relative;
+        }
+        .close-modal {
+            color: #000;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+        }
+        .notepad-content {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            color: #000;
+        }
+        .mp3-icon {
+            width: 20px;
+            height: 20px;
+            background-image: url('mp3.png');
+            background-size: cover;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .song-list a {
+            text-decoration: none;
+            color: #000;
+        }
+        .song-list a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            flex-direction: column;
+        }
+        #audio-player {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="desktop">
+        <div class="window">
+            <div class="title-bar">
+                <div class="title">KUNG FU 2139</div>
+                <div class="close-button" onclick="closeWindow()">X</div>
+            </div>
+            <div class="content">
+                <div class="loading">
+                    <p>Loading KDOS</p>
+                    <p class="hidden">Copyright, 2139</p>
+                    <p class="hidden">BIOS Ver. 2139</p>
+                    <p class="hidden">Battery: Enough</p>
+                    <p class="hidden">Memory: 16777216 KB</p>
+                    <p class="hidden">Initializing USB Controllers: Done</p>
+                    <p class="hidden">KUNG FU 2139: In the year 2139, amidst an apocalyptic wasteland, Kendrick Lamar's music emerges as a beacon of hope and resistance. Discover the lost tracks that hold the secret to humanity's survival.</p>
+                    <p class="hidden">Press ANY key to start</p>
+                </div>
+                <div class="container">
+                    <div class="description">
+                        <p>In the year 2139, amidst an apocalyptic wasteland, Kendrick Lamar's music emerges as a beacon of hope and resistance. Discover the lost tracks that hold the secret to humanity's survival.</p>
+                    </div>
+                    <div class="folder-icon" onclick="openFolder()"></div>
+                </div>
+                <audio id="audio-player" controls style="display: none;"></audio>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="notepad-window">
+            <span class="close-modal" onclick="closeModal()">X</span>
+            <div class="notepad-content">
+                <h2>Song List</h2>
+                <ul class="song-list">
+                    <li><span class="mp3-icon"></span><a href="#" onclick="playSong('songs/dna.mp3')">DNA. (2139 Remix)</a></li>
+                    <li><span class="mp3-icon"></span><a href="#" onclick="playSong('songs/humble.mp3')">HUMBLE. (ft. 2139)</a></li>
+                    <li><span class="mp3-icon"></span><a href="#" onclick="playSong('songs/not-like-us.mp3')">Not Like Us (2139 Remaster)</a></li>
+                    <li><span class="mp3-icon"></span><a href="#" onclick="playSong('songs/swim.mp3')">Swimming (In 2139) Pools</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        let lines = document.querySelectorAll('.loading p');
+        let currentLine = 0;
+
+        function showNextLine() {
+            if (currentLine < lines.length) {
+                lines[currentLine].classList.remove('hidden');
+                currentLine++;
+                setTimeout(showNextLine, 850); // Adjust time to speed up or slow down the loading
+            } else {
+                document.addEventListener('keydown', start);
+            }
+        }
+
+        function start() {
+            document.querySelector('.loading').style.display = 'none';
+            document.querySelector('.container').style.display = 'flex';
+            document.removeEventListener('keydown', start);
+        }
+
+        window.addEventListener('load', showNextLine);
+
+        function closeWindow() {
+            window.close(); // Closes the window when the close button is clicked
+        }
+
+        function openFolder() {
+            document.getElementById("modalOverlay").style.display = "flex"; // Show the modal overlay
+        }
+
+        function closeModal() {
+            document.getElementById("modalOverlay").style.display = "none"; // Hide the modal overlay
+        }
+
+        function playSong(songPath) {
+            const audioPlayer = document.getElementById('audio-player');
+            audioPlayer.src = songPath;
+            audioPlayer.style.display = 'block';
+            audioPlayer.play().catch(error => {
+                console.error('Error playing the song:', error);
+            });
+        }
+    </script>
+</body>
+</html>
