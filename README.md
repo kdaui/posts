@@ -18,6 +18,8 @@ sbw.html - Builds the main (kdaui.github.io/index.html) website in front of your
 
 kdvd.html - Goes to a website detailing the Kendrick Vs Drake beef
 
+2139.html - Goes to a website heavily inspired by https://kanye2049.com
+
 Help - Shows the "help" command
 
 wot - Goes to my "yourworldoftext" website
