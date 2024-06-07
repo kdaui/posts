@@ -10,7 +10,9 @@ Youtube
 
 Twitter
 
-index.html - The main website of this pages
+index.html - The main website of this page
+
+She Dis On My Cord Till I Ping - goes to a website in which you can type in and send a message to my discord server consisting of me and my best friends
 
 ascii.html - Ascii generator
 
