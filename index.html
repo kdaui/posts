@@ -136,7 +136,12 @@
                 const command = inputLine.value.trim().toLowerCase();
                 inputLine.value = '';
                 output.innerHTML += `<div>user@terminal:~$ ${command}</div>`;
-                if (command === 'time') {
+                
+                if (command === 'commands to do things.') {
+                    // Redirect to Rick Roll video
+                    window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+                    output.innerHTML += `<div>lmao</div>`;
+                } else if (command === 'time') {
                     const time = getCurrentTime();
                     output.innerHTML += `<div>Current time: ${time}</div>`;
                 } else if (command === 'temp') {
