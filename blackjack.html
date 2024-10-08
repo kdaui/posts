@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <style>
+		body {
+		font-family: Arial, sans-serif;
+		background-color: black;
+		color: white;
+		text-align: center;
+	}
+
+	#game-board {
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 20px;
+		border: 3px solid white;
+		background-color: black;
+		color: white;
+	}
+
+	h1 {
+		color: white;
+		border-bottom: 2px solid white;
+		padding-bottom: 10px;
+	}
+
+	#dealer-area, #player-area {
+		margin-bottom: 20px;
+		padding: 10px;
+		border: 1px solid white;
+	}
+
+	h2 {
+		border-bottom: 1px solid white;
+		padding-bottom: 5px;
+	}
+
+	#controls {
+		margin-top: 20px;
+	}
+
+	button {
+		margin: 5px;
+		padding: 10px;
+		background-color: white;
+		color: black;
+		border: 2px solid white;
+		cursor: pointer;
+	}
+
+	button:hover {
+		background-color: black;
+		color: white;
+		border: 2px solid white;
+	}
+
+	#result-message {
+		font-size: 18px;
+		font-weight: bold;
+		color: white;
+		border-top: 2px solid white;
+		padding-top: 10px;
+	}
+	</style>
+</head>
+<body>
+    <div id="game-board">
+        <h1>Blackjack</h1>
+        
+        <div id="dealer-area">
+            <h2>Dealer's Hand</h2>
+            <div id="dealer-cards"></div>
+            <p id="dealer-score">Score: 0</p>
+        </div>
+        
+        <div id="player-area">
+            <h2>Your Hand</h2>
+            <div id="player-cards"></div>
+            <p id="player-score">Score: 0</p>
+        </div>
+
+        <div id="controls">
+            <button id="hit-button">Hit</button>
+            <button id="stand-button">Stand</button>
+            <button id="restart-button">Restart</button>
+        </div>
+        
+        <p id="result-message"></p>
+    </div>
+    <script>
+	// LOGIC
+	let deck = [];
+	let playerHand = [];
+	let dealerHand = [];
+	let playerScore = 0;
+	let dealerScore = 0;
+
+	const dealerCardsDiv = document.getElementById('dealer-cards');
+	const playerCardsDiv = document.getElementById('player-cards');
+	const dealerScoreDisplay = document.getElementById('dealer-score');
+	const playerScoreDisplay = document.getElementById('player-score');
+	const resultMessage = document.getElementById('result-message');
+
+	// Initialize game on load
+	window.onload = () => {
+		createDeck();
+		startGame();
+	};
+
+	// Create a deck
+	function createDeck() {
+		const suits = ['Hearts', 'Spades', 'Diamonds', 'Clubs'];
+		const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+		
+		deck = [];
+		for (let suit of suits) {
+			for (let value of values) {
+				deck.push({ value, suit });
+			}
+		}
+		deck = shuffleDeck(deck);
+	}
+
+	// Shuffle
+	function shuffleDeck(deck) {
+		for (let i = deck.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[deck[i], deck[j]] = [deck[j], deck[i]];
+		}
+		return deck;
+	}
+
+	// Start
+	function startGame() {
+		playerHand = [drawCard(), drawCard()];
+		dealerHand = [drawCard(), drawCard()];
+		
+		updateScore();
+		updateUI();
+	}
+
+	// Draw a card
+	function drawCard() {
+		return deck.pop();
+	}
+
+	// Update score based on hand
+	function updateScore() {
+		playerScore = calculateScore(playerHand);
+		dealerScore = calculateScore(dealerHand);
+	}
+
+	// Calculate hand
+	function calculateScore(hand) {
+		let score = 0;
+		let aceCount = 0;
+
+		for (let card of hand) {
+			if (card.value === 'A') {
+				aceCount++;
+				score += 11;
+			} else if (['J', 'Q', 'K'].includes(card.value)) {
+				score += 10;
+			} else {
+				score += parseInt(card.value);
+			}
+		}
+
+		while (score > 21 && aceCount > 0) {
+			score -= 10;
+			aceCount--;
+		}
+
+		return score;
+	}
+
+	// UI Update
+	function updateUI() {
+		dealerCardsDiv.innerHTML = dealerHand.map(card => `${card.value} of ${card.suit}`).join('<br>');
+		playerCardsDiv.innerHTML = playerHand.map(card => `${card.value} of ${card.suit}`).join('<br>');
+
+		dealerScoreDisplay.textContent = `Score: ${dealerScore}`;
+		playerScoreDisplay.textContent = `Score: ${playerScore}`;
+
+		checkForWinner();
+	}
+
+	// Hit event
+	document.getElementById('hit-button').addEventListener('click', () => {
+		playerHand.push(drawCard());
+		updateScore();
+		updateUI();
+	});
+
+	// Stand event
+	document.getElementById('stand-button').addEventListener('click', () => {
+		while (dealerScore < 17) {
+			dealerHand.push(drawCard());
+			updateScore();
+		}
+		updateUI();
+	});
+
+	// Restart event
+	document.getElementById('restart-button').addEventListener('click', () => {
+		createDeck();
+		startGame();
+		resultMessage.textContent = '';
+	});
+
+	// Winner check
+	function checkForWinner() {
+		if (playerScore > 21) {
+			resultMessage.textContent = 'You busted! Dealer wins!';
+		} else if (dealerScore > 21) {
+			resultMessage.textContent = 'Dealer busted! You win!';
+		} else if (dealerScore >= 17 && playerScore > dealerScore) {
+			resultMessage.textContent = 'You win!';
+		} else if (dealerScore >= 17 && dealerScore > playerScore) {
+			resultMessage.textContent = 'Dealer wins!';
+		}
+	}
+	</script>
+</body>
+</html>
