@@ -61,3 +61,5 @@ Gemini
 Steam
 
 Wotaku.moe - A Piracy Megathread dedicated to anime
+
+If there are others, I forgor :skull:
