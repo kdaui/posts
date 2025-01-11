@@ -11,7 +11,7 @@
             'draco': 'a1q1b.html',
             'blackjack': 'blackjack.html',
             'kdake': 'kdake.html',
-            'casino-ish': 'kdasino.html'
+            'casino-ish': 'kdasino.html',
             'fmhy': 'https://fmhy.pages.dev',
             'google': 'https://www.google.com',
             'github': 'https://github.com',
