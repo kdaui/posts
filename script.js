@@ -139,3 +139,4 @@
         }
 
         inputLine.addEventListener('keyup', handleInput);
+}
