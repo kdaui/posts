@@ -5,7 +5,6 @@
             const commands = {
             'home': 'index.html',
             'sbw': 'sbw.html',
-            'she dis on my cord': 'https://kdaui.github.io/app',
             'ascii': 'ascii.html',
             '2139': '2139.html',
             'wot': 'https://ourworldoftext.com/kdaui',
