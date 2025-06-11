@@ -9,6 +9,7 @@
             '2139': '2139.html',
             'wot': 'https://ourworldoftext.com/kdaui',
             'draco': 'a1q1b.html',
+            'kdaco_lore': 'kdaco_lore.html'
             'blackjack': 'blackjack.html',
             'kdake': 'kdake.html',
             'casino-ish': 'kdasino.html',
