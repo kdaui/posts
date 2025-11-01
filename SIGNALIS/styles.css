@@ -1,0 +1,144 @@
+@font-face {
+  font-family: 'Poke';
+  src: url('assets/fonts/poke/poke.woff2') format('woff2'),
+       url('assets/fonts/poke/poke.otf') format('opentype');
+}
+
+body {
+  background-color: #000;
+  perspective: 1000px;
+  color: #d0d0d0;
+  font-family: 'Poke', monospace;
+  font-size: 14px;
+  line-height: 2;
+  image-rendering: pixelated;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    rgba(0, 0, 0, 0) 2px
+  );
+  mix-blend-mode: multiply;
+  opacity: 1;
+  z-index: 9999;
+}
+
+.window {
+  background-color: #fff;
+  width: 1040px;
+  height: 680px;
+  box-shadow: 0 0 128px rgba(0, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 2em;
+}
+
+.title-bar {
+  background-color: #c2455d;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  padding: 4px;
+  letter-spacing: 2px;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  padding: 6px;
+}
+
+.sidebar {
+  width: 25%;
+  background-color: #fff;
+  color: #222;
+  border-right: 2px solid #999;
+  padding: 4px;
+  padding-right: 4em;
+  overflow-y: auto;
+}
+
+.sidebar h3 {
+  margin: 2px 0;
+  background-color: #fff;
+  padding: 4px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 3px 0 3px 8px;
+  border-left: 2px solid #c2455d;
+  cursor: pointer;
+}
+
+.sidebar li:hover {
+  background-color: #bfbfbf;
+  cursor: pointer;
+}
+
+.sidebar li.active {
+  background-color: #fff;
+  border-left: 2px dashed #c2455d;
+}
+
+.details {
+  flex: 1;
+  padding: 10px;
+  color: #000;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.info {
+  width: 65%;
+  background-color: #f0f0f0;
+}
+
+.portrait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding-top: 20px;
+  background-color: #fff;
+}
+
+.portrait p {
+  margin-top: 15px;
+  line-height: 1.2;
+}
+
+.portrait img {
+  width: 160px;
+  height: 222px;
+  image-rendering: pixelated;
+  border: 1px solid #000;
+}
+
+.portrait p {
+  font-size: 14px;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
