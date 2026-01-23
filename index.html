@@ -3,31 +3,151 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Posts</title>
+  <title>K D A U I . — Terminal</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
-   <div id="main-content" class="container">
-    <h1 id="main-header">Posts</h1>
-    <p class="subtitle">Basically all of my other projects.</p>
-
-    <p class="section-title">Links to my stuff:</p>
-    <ul>
-      <li><a href="https://kdaui.github.io">Back to main site</a></li>
-      <li><a href="https://github.com/kdaui">My GitHub</a></li>
-    </ul>
-
-    <p class="section-title">Projects:</p>
-    <ul class="posts">
-      <li><a href="/collab/index.html">Chlaui — A collab site with my bestie</a></li>
-	  <li><a href="/posts/SIGNALIS/index.html">The Signalis Medical Database</a></li>
-      <li><a href="a1q1b.html">Draco's essays — He is a scary individual (Doesn't reflect opinions of me and my friends)</a></li>
-	  <li><a href="ascii.html">ASCII Generator - Turns text into big text</a></li>
-	  <li><a href="blackjack.html">Blackjack - BlackJack made horribly</a></li>
-	  <li><a href="kdaco_lore.html">Kdaco Lore - Draco collabed with others to make lore</a></li>
-	  <li><a href="kdake.html">Kdake - Snake made horribly</a></li>
-    </ul>
+  <div class="technical-bg">
+    <div class="parallax-layer layer-1" data-speed="0.5">
+      <div class="circuit-pattern"></div>
+    </div>
+    
+    <div class="parallax-layer layer-2" data-speed="0.3">
+      <div class="grid-overlay"></div>
+      <div class="hexagon-grid"></div>
+    </div>
+    
+    <div class="parallax-layer layer-rei" data-speed="0.2">
+      <img src="assets/img/rei.png" class="image-bg"/>
+    </div>
+    
+    <div class="scanning-lines"></div>
   </div>
+  
+  <div class="content-wrapper">
+    <header class="main-header">
+      <div class="header-nav">
+        <a href="https://kdaui.github.io" class="nav-link">MAIN</a>
+        <a href="https://github.com/kdaui" class="nav-link">GITHUB</a>
+      </div>
+      <h1 class="main-title">PROJECTS</h1>
+      <p class="main-subtitle">Basically all of my other projects</p>
+    </header>
+    
+    <main class="projects-list">
+      <div class="list-item featured">
+        <div class="item-number">01</div>
+        <div class="item-content">
+          <h2 class="item-title">
+            <span class="title-text">The SIGNALIS Medical Database</span>
+            <span class="title-line"></span>
+          </h2>
+          <p class="item-desc">Probably the only project i'm actually proud of.</p>
+          <a href="/posts/SIGNALIS/index.html" class="item-link">LAUNCH PROJECT</a>
+        </div>
+      </div>
+      
+      <div class="list-item">
+        <div class="item-number">02</div>
+        <div class="item-content">
+          <h2 class="item-title">
+            <span class="title-text">Chlaui</span>
+            <span class="title-line"></span>
+          </h2>
+          <p class="item-desc">A collab site made with a friend.</p>
+          <a href="/collab/index.html" class="item-link">LAUNCH PROJECT</a>
+        </div>
+      </div>
+      
+      <div class="list-item warning">
+        <div class="item-number">03</div>
+        <div class="item-content">
+          <h2 class="item-title">
+            <span class="title-text">Draco's Essays</span>
+            <span class="title-line"></span>
+          </h2>
+          <p class="item-desc">He is a scary individual (Doesn't reflect opinions of me and my friends)</p>
+          <a href="a1q1b.html" class="item-link">LAUNCH PROJECT</a>
+        </div>
+      </div>
+      
+      <div class="list-item">
+        <div class="item-number">04</div>
+        <div class="item-content">
+          <h2 class="item-title">
+            <span class="title-text">ASCII Generator</span>
+            <span class="title-line"></span>
+          </h2>
+          <p class="item-desc">Turns text into big text</p>
+          <a href="ascii.html" class="item-link">LAUNCH PROJECT</a>
+        </div>
+      </div>
+      
+      <div class="list-item">
+        <div class="item-number">05</div>
+        <div class="item-content">
+          <h2 class="item-title">
+            <span class="title-text">Blackjack</span>
+            <span class="title-line"></span>
+          </h2>
+          <p class="item-desc">BlackJack made horribly</p>
+          <a href="blackjack.html" class="item-link">LAUNCH PROJECT</a>
+        </div>
+      </div>
+      
+      <div class="list-item">
+        <div class="item-number">06</div>
+        <div class="item-content">
+          <h2 class="item-title">
+            <span class="title-text">Kdaco Lore</span>
+            <span class="title-line"></span>
+          </h2>
+          <p class="item-desc">Draco collabed with others to make lore</p>
+          <a href="kdaco_lore.html" class="item-link">LAUNCH PROJECT</a>
+        </div>
+      </div>
+      
+      <div class="list-item">
+        <div class="item-number">07</div>
+        <div class="item-content">
+          <h2 class="item-title">
+            <span class="title-text">Kdake</span>
+            <span class="title-line"></span>
+          </h2>
+          <p class="item-desc">Snake made horribly</p>
+          <a href="kdake.html" class="item-link">LAUNCH PROJECT</a>
+        </div>
+      </div>
+    </main>
+    
+    <footer class="main-footer">
+      <div class="footer-line"></div>
+      <p class="footer-text">"God's in his heaven. All's right with the world."</p>
+    </footer>
+  </div>
+  
+  <script>
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll('.parallax-layer');
+      
+      parallaxElements.forEach(element => {
+        const speed = element.dataset.speed;
+        const yPos = -(scrolled * speed);
+        element.style.transform = `translateY(${yPos}px)`;
+      });
+    });
+    
+    const binaryRain = document.querySelector('.binary-rain');
+    for (let i = 0; i < 50; i++) {
+      const drop = document.createElement('div');
+      drop.className = 'binary-drop';
+      drop.style.left = Math.random() * 100 + '%';
+      drop.style.animationDelay = Math.random() * 5 + 's';
+      drop.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      binaryRain.appendChild(drop);
+    }
+  </script>
 </body>
-
 </html>
