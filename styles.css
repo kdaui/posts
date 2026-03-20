@@ -39,7 +39,7 @@ body {
 
 .image-bg {
   position: absolute;
-  left: 52em;
+  left: 50%;
   top: 15em;
   opacity: 0.15;
   width: 600px;
@@ -59,7 +59,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     linear-gradient(var(--border-color) 1px, transparent 1px),
     linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
   background-size: 50px 50px;
@@ -80,7 +80,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: 
+  background:
     linear-gradient(rgba(94, 138, 191, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(94, 138, 191, 0.1) 1px, transparent 1px);
   background-size: 30px 30px;
@@ -99,11 +99,9 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    0deg,
-    transparent 50%,
-    rgba(94, 138, 191, 0.03) 50%
-  );
+  background: linear-gradient(0deg,
+      transparent 50%,
+      rgba(94, 138, 191, 0.03) 50%);
   background-size: 100% 4px;
   animation: scan 8s linear infinite;
 }
@@ -112,6 +110,7 @@ body {
   0% {
     background-position: 0 0;
   }
+
   100% {
     background-position: 0 100px;
   }
@@ -209,6 +208,7 @@ body {
   height: 100%;
   background: linear-gradient(90deg, rgba(61, 98, 153, 0.3), transparent);
   transition: width 0.4s ease;
+  pointer-events: none;
 }
 
 .list-item:hover::before {
@@ -236,10 +236,14 @@ body {
   min-width: 60px;
   text-align: center;
   line-height: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .item-content {
   flex-grow: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .item-title {
@@ -282,6 +286,8 @@ body {
   font-size: 0.9rem;
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .item-link:hover {
@@ -313,31 +319,31 @@ body {
   .main-title {
     font-size: 3rem;
   }
-  
+
   .image-bg {
     left: 50%;
     top: 15em;
     width: 300px;
   }
-  
+
   .list-item {
     flex-direction: column;
     text-align: center;
     gap: 20px;
   }
-  
+
   .item-number {
     font-size: 2rem;
   }
-  
+
   .title-line {
     display: none;
   }
-  
+
   .item-title {
     justify-content: center;
   }
-  
+
   .list-item:hover {
     transform: translateY(-5px);
   }
@@ -347,22 +353,21 @@ body {
   .content-wrapper {
     padding: 40px 15px;
   }
-  
+
   .main-title {
     font-size: 2.5rem;
   }
-  
+
   .header-nav {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .list-item {
     padding: 20px;
   }
-  
+
   .image-bg {
     width: 250px;
   }
 }
-
