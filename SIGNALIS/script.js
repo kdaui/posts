@@ -152,11 +152,17 @@ patients.forEach((p, i) => {
 document.addEventListener("keydown", (e) => {
   const items = document.querySelectorAll("#patient-list li");
   if (e.key === "ArrowDown") {
-    selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+    e.preventDefault();
+    if (selectedIndex === -1) selectedIndex = 0;
+    else selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
     items[selectedIndex].focus();
+    showPatient(selectedIndex);
   } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    if (selectedIndex === -1) selectedIndex = 0;
     selectedIndex = Math.max(selectedIndex - 1, 0);
     items[selectedIndex].focus();
+    showPatient(selectedIndex);
   }
 });
 
