@@ -39,7 +39,7 @@ body::before {
   background-color: #fff;
   width: 1040px;
   height: 680px;
-  box-shadow: 0 0 128px rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 200px rgba(0, 255, 255, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
