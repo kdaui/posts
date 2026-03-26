@@ -91,9 +91,10 @@ body::before {
   cursor: pointer;
 }
 
-.sidebar li:hover {
+.sidebar li:hover, .sidebar li:focus {
   background-color: #bfbfbf;
   cursor: pointer;
+  outline: none;
 }
 
 .sidebar li.active {

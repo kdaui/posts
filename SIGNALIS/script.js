@@ -133,12 +133,31 @@ const patients = [
   },
 ];
 
+let selectedIndex = -1;
+
 const list = document.getElementById("patient-list");
 patients.forEach((p, i) => {
   const li = document.createElement("li");
   li.textContent = p.name;
+  li.tabIndex = 0;
   li.addEventListener("click", () => showPatient(i));
+  li.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      showPatient(i);
+    }
+  });
   list.appendChild(li);
+});
+
+document.addEventListener("keydown", (e) => {
+  const items = document.querySelectorAll("#patient-list li");
+  if (e.key === "ArrowDown") {
+    selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+    items[selectedIndex].focus();
+  } else if (e.key === "ArrowUp") {
+    selectedIndex = Math.max(selectedIndex - 1, 0);
+    items[selectedIndex].focus();
+  }
 });
 
 function showPatient(index) {
