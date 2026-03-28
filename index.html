@@ -201,12 +201,7 @@
       binaryRain.appendChild(drop);
     }
   </script>
-  <footer class="site-footer">
-    <span class="last-updated-date">Last updated: <span class="last-updated"></span></span>
-  </footer>
-  <script>
-    document.querySelector('.last-updated').textContent = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
-  </script>
+  
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/posts/sw.js').then(() => {});
