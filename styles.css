@@ -371,3 +371,19 @@ body {
     width: 250px;
   }
 }
+
+.site-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 15px 20px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  margin-top: 40px;
+}
+
+.site-footer .last-updated-date {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
