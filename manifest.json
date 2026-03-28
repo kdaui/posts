@@ -1,0 +1,16 @@
+{
+  "name": "KDAUI Terminal",
+  "short_name": "Terminal",
+  "description": "KDAUI projects and posts",
+  "start_url": "/posts",
+  "display": "standalone",
+  "background_color": "#0A0F1C",
+  "theme_color": "#5E8ABF",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

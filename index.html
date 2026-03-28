@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>K D A U I . — Terminal</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#5E8ABF" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
 </head>
@@ -195,6 +199,17 @@
       drop.style.animationDelay = Math.random() * 5 + 's';
       drop.style.animationDuration = (Math.random() * 3 + 2) + 's';
       binaryRain.appendChild(drop);
+    }
+  </script>
+  <footer class="site-footer">
+    <p>Last updated: <span class="last-updated"></span></p>
+  </footer>
+  <script>
+    document.querySelector('.last-updated').textContent = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/posts/sw.js').then(() => {});
     }
   </script>
 </body>
