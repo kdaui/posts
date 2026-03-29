@@ -5,51 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Art Converter</title>
     <style>
+        :root {
+            --primary-dark: #0A0F1C;
+            --secondary-dark: #141928;
+            --tertiary-dark: #1C2333;
+            --primary-blue: #1B3A5F;
+            --secondary-blue: #2C4E7C;
+            --accent-blue: #3D6299;
+            --light-accent: #5E8ABF;
+            --text-primary: #B8C5D6;
+            --text-secondary: #8A9BB3;
+            --border-color: #2A3F5F;
+        }
+
         * {
             box-sizing: border-box;
         }
+
         body {
-            background-color: #121212;
-            color: #00FF00;
-            font-family: 'Courier New', monospace;
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
             padding: 20px;
             margin: 0;
+            min-height: 100vh;
         }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
+
+        .technical-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
         }
+
+        .circuit-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.1;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(rgba(94, 138, 191, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(94, 138, 191, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .scanning-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg,
+                transparent 50%,
+                rgba(94, 138, 191, 0.03) 50%);
+            background-size: 100% 4px;
+        }
+
         .container {
+            position: relative;
+            z-index: 1;
             max-width: 900px;
             margin: 0 auto;
         }
+
+        h1 {
+            text-align: center;
+            color: var(--light-accent);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--light-accent), transparent);
+        }
+
         .upload-zone {
-            border: 2px dashed #00FF00;
-            border-radius: 10px;
+            border: 2px dashed var(--accent-blue);
+            border-radius: 8px;
             padding: 40px;
             text-align: center;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
             margin-bottom: 20px;
+            background: rgba(28, 35, 51, 0.6);
         }
+
         .upload-zone:hover {
-            background: #1a1a1a;
+            background: rgba(61, 98, 153, 0.2);
+            border-color: var(--light-accent);
         }
+
         .upload-zone.dragover {
-            background: #1a1a1a;
-            border-color: #00cc00;
+            background: rgba(61, 98, 153, 0.3);
+            border-color: var(--light-accent);
         }
+
+        .upload-zone p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
         .preview-container {
             display: none;
             text-align: center;
             margin-bottom: 20px;
         }
+
         #preview-img {
             max-width: 300px;
             max-height: 200px;
-            border: 1px solid #00FF00;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
         }
+
+        #file-name {
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
         .controls {
             display: flex;
             flex-wrap: wrap;
@@ -57,83 +152,143 @@
             justify-content: center;
             margin-bottom: 20px;
             padding: 15px;
-            background: #1a1a1a;
-            border-radius: 10px;
+            background: rgba(28, 35, 51, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
         }
+
         .control-group {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 5px;
         }
+
         label {
             font-size: 12px;
-            color: #00cc00;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
         }
+
         input[type="range"] {
             width: 150px;
+            accent-color: var(--light-accent);
         }
+
         select {
-            padding: 5px;
-            background: #333;
-            color: #00FF00;
-            border: 1px solid #00FF00;
-            border-radius: 5px;
+            padding: 5px 10px;
+            background: var(--tertiary-dark);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--light-accent);
             cursor: pointer;
         }
+
         button {
             padding: 10px 20px;
-            background: #00FF00;
-            color: #121212;
-            border: none;
-            border-radius: 5px;
+            background: transparent;
+            border: 1px solid var(--accent-blue);
+            color: var(--light-accent);
+            border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.1s;
+            font-family: inherit;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s;
         }
+
         button:hover {
-            transform: scale(1.05);
+            background: rgba(61, 98, 153, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(94, 138, 191, 0.2);
         }
+
         button:active {
-            transform: scale(0.95);
+            transform: scale(0.98);
         }
+
         .button-group {
             display: flex;
             gap: 10px;
             justify-content: center;
             margin-bottom: 20px;
         }
-        .btn-secondary {
-            background: #333;
-            color: #00FF00;
-            border: 1px solid #00FF00;
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: var(--primary-dark);
+            font-weight: bold;
         }
+
+        .btn-primary:hover {
+            background: var(--light-accent);
+        }
+
         #ascii-output {
             white-space: pre;
             font-size: 8px;
             line-height: 8px;
-            background: #000;
+            background: rgba(10, 15, 28, 0.8);
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow-x: auto;
             text-align: center;
             min-height: 100px;
+            border: 1px solid var(--border-color);
             display: none;
         }
+
         #ascii-output.visible {
             display: block;
         }
+
         .hidden {
             display: none !important;
         }
+
         .status {
             text-align: center;
-            color: #00cc00;
+            color: var(--light-accent);
             margin-top: 10px;
+            min-height: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+                letter-spacing: 4px;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .button-group {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="technical-bg"></div>
+    <div class="circuit-pattern"></div>
+    <div class="grid-overlay"></div>
+    <div class="scanning-lines"></div>
+
     <div class="container">
         <h1>ASCII Art Converter</h1>
         
@@ -168,9 +323,9 @@
         </div>
 
         <div class="button-group">
-            <button id="convert-btn">Convert</button>
-            <button id="copy-btn" class="btn-secondary hidden">Copy</button>
-            <button id="download-btn" class="btn-secondary hidden">Download .txt</button>
+            <button id="convert-btn" class="btn-primary">Convert</button>
+            <button id="copy-btn" class="hidden">Copy</button>
+            <button id="download-btn" class="hidden">Download .txt</button>
         </div>
 
         <pre id="ascii-output"></pre>
