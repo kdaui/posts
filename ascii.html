@@ -1,256 +1,320 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Big ASCII Text</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Art Converter</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             background-color: #121212;
             color: #00FF00;
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
             text-align: center;
-            padding-top: 50px;
+            margin-bottom: 30px;
         }
-
-        #input-text {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #333;
-            color: #00FF00;
-            outline: none;
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
         }
-
-        #generate-btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #333;
-            color: #00FF00;
+        .upload-zone {
+            border: 2px dashed #00FF00;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
             cursor: pointer;
-            outline: none;
+            transition: background 0.3s;
+            margin-bottom: 20px;
         }
-
+        .upload-zone:hover {
+            background: #1a1a1a;
+        }
+        .upload-zone.dragover {
+            background: #1a1a1a;
+            border-color: #00cc00;
+        }
+        .preview-container {
+            display: none;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #preview-img {
+            max-width: 300px;
+            max-height: 200px;
+            border: 1px solid #00FF00;
+            border-radius: 5px;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        label {
+            font-size: 12px;
+            color: #00cc00;
+        }
+        input[type="range"] {
+            width: 150px;
+        }
+        select {
+            padding: 5px;
+            background: #333;
+            color: #00FF00;
+            border: 1px solid #00FF00;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button {
+            padding: 10px 20px;
+            background: #00FF00;
+            color: #121212;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.1s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .btn-secondary {
+            background: #333;
+            color: #00FF00;
+            border: 1px solid #00FF00;
+        }
         #ascii-output {
             white-space: pre;
-            font-size: 14px;
-            background-color: #333;
-            padding: 10px;
-            border-radius: 5px;
+            font-size: 8px;
+            line-height: 8px;
+            background: #000;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            text-align: center;
+            min-height: 100px;
+            display: none;
+        }
+        #ascii-output.visible {
+            display: block;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .status {
+            text-align: center;
+            color: #00cc00;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Big ASCII Text Generator</h1>
-    <input type="text" id="input-text" placeholder="Enter text here...">
-    <button onclick="generateBigAsciiText()">Generate ASCII</button>
-    <pre id="ascii-output"></pre>
+    <div class="container">
+        <h1>ASCII Art Converter</h1>
+        
+        <div class="upload-zone" id="upload-zone">
+            <p>Drag & drop an image here<br>or click to browse</p>
+            <input type="file" id="file-input" accept="image/*" hidden>
+        </div>
+
+        <div class="preview-container" id="preview-container">
+            <img id="preview-img" alt="Preview">
+            <p id="file-name"></p>
+        </div>
+
+        <div class="controls" id="controls">
+            <div class="control-group">
+                <label for="width-slider">Width: <span id="width-value">100</span> chars</label>
+                <input type="range" id="width-slider" min="30" max="200" value="100">
+            </div>
+            <div class="control-group">
+                <label for="charset-select">Character Set</label>
+                <select id="charset-select">
+                    <option value="standard">Standard (@%#*+=-:. )</option>
+                    <option value="blocks">Blocks (█▓▒░ )</option>
+                    <option value="simple">Simple (MWN$K@#%?*+;:,~ )</option>
+                    <option value="binary">Binary (10 )</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="invert-check">Invert</label>
+                <input type="checkbox" id="invert-check">
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button id="convert-btn">Convert</button>
+            <button id="copy-btn" class="btn-secondary hidden">Copy</button>
+            <button id="download-btn" class="btn-secondary hidden">Download .txt</button>
+        </div>
+
+        <pre id="ascii-output"></pre>
+        <p class="status" id="status"></p>
+    </div>
+
     <script>
-        const asciiAlphabet = {
-            'A': [
-                '  A  ',
-                ' A A ',
-                'AAAAA',
-                'A   A',
-                'A   A'
-            ],
-            'B': [
-                'BBBB ',
-                'B   B',
-                'BBBB ',
-                'B   B',
-                'BBBB '
-            ],
-            'C': [
-                ' CCC ',
-                'C   C',
-                'C    ',
-                'C   C',
-                ' CCC '
-            ],
-            'D': [
-                'DDDD ',
-                'D   D',
-                'D   D',
-                'D   D',
-                'DDDD '
-            ],
-            'E': [
-                'EEEEE',
-                'E    ',
-                'EEE  ',
-                'E    ',
-                'EEEEE'
-            ],
-            'F': [
-                'FFFFF',
-                'F    ',
-                'FFF  ',
-                'F    ',
-                'F    '
-            ],
-            'G': [
-                ' GGG ',
-                'G    ',
-                'G  GG',
-                'G   G',
-                ' GGG '
-            ],
-            'H': [
-                'H   H',
-                'H   H',
-                'HHHHH',
-                'H   H',
-                'H   H'
-            ],
-            'I': [
-                ' III ',
-                '  I  ',
-                '  I  ',
-                '  I  ',
-                ' III '
-            ],
-            'J': [
-                'JJJJJ',
-                '    J',
-                '    J',
-                'J   J',
-                ' JJJ '
-            ],
-            'K': [
-                'K   K',
-                'K  K ',
-                'KK   ',
-                'K  K ',
-                'K   K'
-            ],
-            'L': [
-                'L    ',
-                'L    ',
-                'L    ',
-                'L    ',
-                'LLLLL'
-            ],
-            'M': [
-                'M   M',
-                'MM MM',
-                'M M M',
-                'M   M',
-                'M   M'
-            ],
-            'N': [
-                'N   N',
-                'NN  N',
-                'N N N',
-                'N  NN',
-                'N   N'
-            ],
-            'O': [
-                ' OOO ',
-                'O   O',
-                'O   O',
-                'O   O',
-                ' OOO '
-            ],
-            'P': [
-                'PPP  ',
-                'P   P',
-                'PPP  ',
-                'P    ',
-                'P    '
-            ],
-            'Q': [
-                ' QQQ ',
-                'Q   Q',
-                'Q Q Q',
-                'Q  QQ',
-                ' QQQQ'
-            ],
-            'R': [
-                'RRRR ',
-                'R   R',
-                'RRRR ',
-                'R  R ',
-                'R   R'
-            ],
-            'S': [
-                ' SSS ',
-                'S    ',
-                ' SSS ',
-                '    S',
-                ' SSS '
-            ],
-            'T': [
-                'TTTTT',
-                '  T  ',
-                '  T  ',
-                '  T  ',
-                '  T  '
-            ],
-            'U': [
-                'U   U',
-                'U   U',
-                'U   U',
-                'U   U',
-                ' UUU '
-            ],
-            'V': [
-                'V   V',
-                'V   V',
-                'V   V',
-                ' V V ',
-                '  V  '
-            ],
-            'W': [
-                'W   W',
-                'W   W',
-                'W W W',
-                'W W W',
-                ' W W '
-            ],
-            'X': [
-                'X   X',
-                ' X X ',
-                '  X  ',
-                ' X X ',
-                'X   X'
-            ],
-            'Y': [
-                'Y   Y',
-                ' Y Y ',
-                '  Y  ',
-                '  Y  ',
-                '  Y  '
-            ],
-            'Z': [
-                'ZZZZZ',
-                '   Z ',
-                '  Z  ',
-                ' Z   ',
-                'ZZZZZ'
-            ],
-            ' ': [
-                '     ',
-                '     ',
-                '     ',
-                '     ',
-                '     '
-            ]
+        const uploadZone = document.getElementById('upload-zone');
+        const fileInput = document.getElementById('file-input');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImg = document.getElementById('preview-img');
+        const fileName = document.getElementById('file-name');
+        const widthSlider = document.getElementById('width-slider');
+        const widthValue = document.getElementById('width-value');
+        const charsetSelect = document.getElementById('charset-select');
+        const invertCheck = document.getElementById('invert-check');
+        const convertBtn = document.getElementById('convert-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const asciiOutput = document.getElementById('ascii-output');
+        const status = document.getElementById('status');
+
+        let currentImage = null;
+        let asciiText = '';
+
+        const charsets = {
+            standard: '@%#*+=-:. ',
+            blocks: '█▓▒░ ',
+            simple: 'MWN$K@#%?*+;:,~ ',
+            binary: '10 '
         };
-        function generateBigAsciiText() {
-            const inputText = document.getElementById('input-text').value.toUpperCase();
-            let asciiOutput = '';
-            for (let lineIndex = 0; lineIndex < 5; lineIndex++) {
-                for (let char of inputText) {
-                    if (asciiAlphabet[char]) {
-                        asciiOutput += asciiAlphabet[char][lineIndex] + ' ';
-                    } else {
-                        asciiOutput += '     ';
-                    }
-                }
-                asciiOutput += '\n';
+
+        uploadZone.addEventListener('click', () => fileInput.click());
+
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                loadImage(file);
             }
-            document.getElementById('ascii-output').innerText = asciiOutput;
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) loadImage(file);
+        });
+
+        widthSlider.addEventListener('input', () => {
+            widthValue.textContent = widthSlider.value;
+        });
+
+        convertBtn.addEventListener('click', convertToAscii);
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(asciiText).then(() => {
+                status.textContent = 'Copied to clipboard!';
+                setTimeout(() => status.textContent = '', 2000);
+            });
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const blob = new Blob([asciiText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ascii-art.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        function loadImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    currentImage = img;
+                    previewImg.src = e.target.result;
+                    fileName.textContent = file.name;
+                    previewContainer.style.display = 'block';
+                    asciiOutput.classList.add('visible');
+                    copyBtn.classList.remove('hidden');
+                    downloadBtn.classList.remove('hidden');
+                    convertToAscii();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function convertToAscii() {
+            if (!currentImage) {
+                status.textContent = 'Please upload an image first';
+                return;
+            }
+
+            const width = parseInt(widthSlider.value);
+            const charset = charsets[charsetSelect.value];
+            const inverted = invertCheck.checked;
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            const aspectRatio = currentImage.height / currentImage.width;
+            const height = Math.floor(width * aspectRatio * 0.5);
+
+            canvas.width = width;
+            canvas.height = height;
+
+            ctx.drawImage(currentImage, 0, 0, width, height);
+
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const pixels = imageData.data;
+
+            let ascii = '';
+
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const i = (y * width + x) * 4;
+                    const r = pixels[i];
+                    const g = pixels[i + 1];
+                    const b = pixels[i + 2];
+
+                    const brightness = (r + g + b) / 3;
+                    const charIndex = Math.floor((brightness / 255) * (charset.length - 1));
+                    let char = charset[inverted ? charset.length - 1 - charIndex : charIndex];
+                    
+                    ascii += char;
+                }
+                ascii += '\n';
+            }
+
+            asciiText = ascii;
+            asciiOutput.textContent = ascii;
+            status.textContent = '';
         }
     </script>
 </body>
